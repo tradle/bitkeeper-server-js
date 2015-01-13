@@ -24,7 +24,6 @@ function createServer(keeper, port, callback) {
     requestDomain.add(req);
     requestDomain.add(res);
     requestDomain.on('error', function(err) {
-      debugger;
       debug('Uncaught error, processing in domain error handler: ' + err.message);
       errorHandler(err, req, res);
     });

@@ -1,7 +1,7 @@
 
 'use strict';
 
-var Keeper = require('node-bitkeeper');
+var Keeper = require('bitkeeper-js');
 var server = require('./');
 var minimist = require('minimist');
 var fs = require('fs');
@@ -13,12 +13,15 @@ var configPath;
 if (argv.keeper)
   configPath = path.join(__dirname, argv.keeper);
 else
-  configPath = path.join(__dirname + 'node_modules/node-bitkeeper/conf/config.json');
+  configPath = path.join(__dirname + 'node_modules/bitkeeper-js/conf/config.json');
 
 var config = fs.readFileSync(configPath, { encoding: 'utf8' });
 config = JSON.parse(config);
 
-if (argv.test) config.dht = new (require('bittorrent-dht/client'))({ bootstrap: false });
+if (argv.dht === 'false') {
+  // don't connect to the bittorrent-dht
+  config.dht = new (require('bittorrent-dht/client'))({ bootstrap: false });
+}
 
 var port = argv.port || require('./conf/config.json').port;
 
