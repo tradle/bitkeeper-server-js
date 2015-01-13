@@ -24,9 +24,9 @@
     "debug": "^2.1.1",
     "express": "^4.10.7",
     "minimist": "^1.1.0",
-    "bitkeeper-js": "^0.0.1",
+    "bitkeeper-js": "git://github.com/tradle/bitkeeper-js.git",
     "tradle-utils": "^0.0.1",
-    "promise-ports": "^0.0.1"
+    "promise-ports": "git://github.com/tradle/promise-ports.git"
   },
   "devDependencies": {
     "bittorrent-dht": "^2.6.4"
