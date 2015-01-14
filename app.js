@@ -27,12 +27,5 @@ var port = argv.port || require('./conf/config.json').port;
 var keeper = new Keeper(config);
 keeper.on('ready', function() {
   console.log('Bitkeeper is ready, starting server...');
-  start();
+  server.create(keeper, port);
 });
-
-function start() {
-  server.create(keeper, port, function() {
-    console.log('Bitkeeper server running on port ' + port);
-  });
-}
-

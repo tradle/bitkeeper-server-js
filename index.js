@@ -61,8 +61,8 @@ function createServer(keeper, port, callback) {
   process.on('SIGINT', cleanup);
   process.on('SIGTERM', cleanup);
   process.on('uncaughtException', function(err) {
-    debug('Uncaught exception, caught in process catch-all: ' + err.message);
-    debug(err.stack);
+    console.log('Uncaught exception, caught in process catch-all: ' + err.message);
+    console.log(err.stack);
   });
 
   // if (require.main === global.module) {
@@ -76,7 +76,7 @@ function createServer(keeper, port, callback) {
   portPromise.done(checkReady);
 
   var server = app.listen(privPort, function() {
-    debug('Running on port: ' + privPort);
+    console.log('Running on port: ' + privPort);
     // request('http://127.0.0.1:' + privPort + '/ping', function(err, resp, body) {
     //   console.log('Ping self: ' + resp.statusCode);
     // });
@@ -110,7 +110,7 @@ function createServer(keeper, port, callback) {
     return ports.mapPort(pubPort, privPort, true).then(function() {
       mapping = { 'public': pubPort, 'private': privPort };
     }).catch(function(err) {
-      debug('Failed to create port mapping', err);
+      console.error('Failed to create port mapping', err);
       process.exit();
     });
   }
