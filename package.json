@@ -7,7 +7,7 @@
     "bitkeeper": "./app.js"
   },
   "scripts": {
-    "postinstall": "cp node_modules/tradle-style/.*rc .",
+    "postinstall": "cp node_modules/tradle-style/.js* .",
     "jsbeautify": "js-beautify -r {*.js,**/*.js}",
     "jscs": "jscs {*.js,**/*.js}",
     "jshint": "jshint {*.js,**/*.js}",
