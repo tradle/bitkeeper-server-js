@@ -33,7 +33,7 @@ var port = argv.port || require('./conf/config.json').port;
 
 var keeper = new Keeper(config);
 keeper.seedStored();
-keeper.on('ready', function () {
+keeper.on('ready', function() {
   console.log('Bitkeeper is ready, starting server...');
   server.create(keeper, port);
 });

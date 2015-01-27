@@ -18,11 +18,11 @@ function createServer(keeper, port, callback) {
   var mapping;
 
   app.set('keeper', keeper);
-  app.use(function (req, res, next) {
+  app.use(function(req, res, next) {
     var requestDomain = domain.create();
     requestDomain.add(req);
     requestDomain.add(res);
-    requestDomain.on('error', function (err) {
+    requestDomain.on('error', function(err) {
       debug('Uncaught error, processing in domain error handler: ' + err.message);
       errorHandler(err, req, res);
     });
@@ -31,7 +31,7 @@ function createServer(keeper, port, callback) {
     requestDomain.run(next);
   });
 
-  app.use(function (req, res, next) {
+  app.use(function(req, res, next) {
     if (req.hostname !== 'localhost' && req.hostname !== '127.0.0.1') throw utils.httpError(400, 'Only local requests permitted');
 
     next();
@@ -61,7 +61,7 @@ function createServer(keeper, port, callback) {
   process.on('exit', cleanup);
   process.on('SIGINT', cleanup);
   process.on('SIGTERM', cleanup);
-  process.on('uncaughtException', function (err) {
+  process.on('uncaughtException', function(err) {
     console.log('Uncaught exception, caught in process catch-all: ' + err.message);
     console.log(err.stack);
   });
@@ -76,7 +76,7 @@ function createServer(keeper, port, callback) {
   var portPromise = createPortMapping();
   portPromise.done(checkReady);
 
-  var server = app.listen(privPort, function () {
+  var server = app.listen(privPort, function() {
     console.log('Running on port: ' + privPort);
     // request('http://127.0.0.1:' + privPort + '/ping', function(err, resp, body) {
     //   console.log('Ping self: ' + resp.statusCode);
@@ -113,13 +113,13 @@ function createServer(keeper, port, callback) {
         private: privPort,
         hijack: true
       })
-      .then(function () {
+      .then(function() {
         mapping = {
-          'public': pubPort,
-          'private': privPort
+          public: pubPort,
+          private: privPort
         };
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.error('Failed to create port mapping', err);
         process.exit();
       });

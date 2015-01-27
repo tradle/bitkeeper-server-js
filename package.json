@@ -7,14 +7,15 @@
     "bitkeeper": "./app.js"
   },
   "scripts": {
-    "postinstall": "cp node_modules/tradle-style/.js* .",
-    "jsbeautify": "js-beautify -r **.js",
-    "jshint": "jshint **.js",
+    "postinstall": "cp node_modules/tradle-style/.*rc .",
+    "jsbeautify": "js-beautify -r {*.js,**/*.js}",
+    "jscs": "jscs {*.js,**/*.js}",
+    "jshint": "jshint {*.js,**/*.js}",
     "run": "node ./app.js",
     "testrun": "node ./app.js --dht=false"
   },
   "pre-commit": [
-    "jsbeautify",
+    "jscs",
     "jshint"
   ],
   "bugs": {
@@ -39,6 +40,8 @@
   "devDependencies": {
     "bittorrent-dht": "^2.6.4",
     "js-beautify": "latest",
+    "jscs": "^1.10.0",
+    "jshint": "latest",
     "pre-commit": "0.0.11",
     "tape": "^3.4.0",
     "tradle-style": "0.0.1"
