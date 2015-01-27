@@ -1,4 +1,3 @@
-
 'use strict';
 
 var express = require('express');
@@ -6,7 +5,7 @@ var router = express.Router();
 var common = require('tradle-utils');
 // var base58 = require('bs58');
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   var key = req.query.key;
   var keys = req.query.keys;
 
@@ -19,13 +18,13 @@ router.get('/', function(req, res) {
 
   req.app.get('keeper')
     .get(keys)
-    .done(function(results) {
+    .done(function (results) {
       // results = results.map(function(r) { return r.value });
 
       var value = key ? results[0] : results;
-      if (typeof value === 'undefined') 
+      if (typeof value === 'undefined')
         res.status(404).end();
-      else 
+      else
         res.status(200).send(value);
     });
 });

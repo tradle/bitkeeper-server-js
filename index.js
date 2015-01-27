@@ -1,4 +1,3 @@
-
 'use strict';
 
 var assert = require('assert');
@@ -7,7 +6,7 @@ var bodyParser = require('body-parser');
 var debug = require('debug')('bitkeeper-server');
 
 var domain = require('domain');
-var common = require('tradle-utils');
+var utils = require('tradle-utils');
 var ports = require('promise-ports');
 var router = require('./router');
 // var request = require('request');
@@ -19,11 +18,11 @@ function createServer(keeper, port, callback) {
   var mapping;
 
   app.set('keeper', keeper);
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     var requestDomain = domain.create();
     requestDomain.add(req);
     requestDomain.add(res);
-    requestDomain.on('error', function(err) {
+    requestDomain.on('error', function (err) {
       debug('Uncaught error, processing in domain error handler: ' + err.message);
       errorHandler(err, req, res);
     });
@@ -32,13 +31,15 @@ function createServer(keeper, port, callback) {
     requestDomain.run(next);
   });
 
-  app.use(function(req, res, next) {
-    if (req.hostname !== 'localhost' && req.hostname !== '127.0.0.1') throw common.httpError(400, 'Only local requests permitted');
+  app.use(function (req, res, next) {
+    if (req.hostname !== 'localhost' && req.hostname !== '127.0.0.1') throw utils.httpError(400, 'Only local requests permitted');
 
     next();
   });
 
-  app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+  app.use(bodyParser.urlencoded({
+    extended: true
+  })); // for parsing application/x-www-form-urlencoded
 
   /**
    * Routes
@@ -60,13 +61,13 @@ function createServer(keeper, port, callback) {
   process.on('exit', cleanup);
   process.on('SIGINT', cleanup);
   process.on('SIGTERM', cleanup);
-  process.on('uncaughtException', function(err) {
+  process.on('uncaughtException', function (err) {
     console.log('Uncaught exception, caught in process catch-all: ' + err.message);
     console.log(err.stack);
   });
 
   // if (require.main === global.module) {
-    // run directly, not as sub-app
+  // run directly, not as sub-app
 
   var mappingIntervalId = setInterval(createPortMapping, ttl);
   var pubPort = port;
@@ -75,7 +76,7 @@ function createServer(keeper, port, callback) {
   var portPromise = createPortMapping();
   portPromise.done(checkReady);
 
-  var server = app.listen(privPort, function() {
+  var server = app.listen(privPort, function () {
     console.log('Running on port: ' + privPort);
     // request('http://127.0.0.1:' + privPort + '/ping', function(err, resp, body) {
     //   console.log('Ping self: ' + resp.statusCode);
@@ -86,16 +87,16 @@ function createServer(keeper, port, callback) {
   });
 
   function checkReady() {
-    if (serverIsUp && 
-        portPromise.inspect().state === 'fulfilled' && 
-        callback) {
+    if (serverIsUp &&
+      portPromise.inspect().state === 'fulfilled' &&
+      callback) {
       callback(null, server);
     }
   }
 
   function errorHandler(err, req, res, next) {
     if (res.finished) return;
-    
+
     var code = err.status || 500;
     var msg = 'status' in err ? err.message : 'There was an error with your request. Please contact support@tradle.io';
 
@@ -107,12 +108,21 @@ function createServer(keeper, port, callback) {
   }
 
   function createPortMapping() {
-    return ports.mapPort(pubPort, privPort, true).then(function() {
-      mapping = { 'public': pubPort, 'private': privPort };
-    }).catch(function(err) {
-      console.error('Failed to create port mapping', err);
-      process.exit();
-    });
+    return ports.mapPort({
+        public: pubPort,
+        private: privPort,
+        hijack: true
+      })
+      .then(function () {
+        mapping = {
+          'public': pubPort,
+          'private': privPort
+        };
+      })
+      .catch(function (err) {
+        console.error('Failed to create port mapping', err);
+        process.exit();
+      });
   }
 
   function cleanup() {
