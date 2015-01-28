@@ -22,8 +22,10 @@ if (argv.dht === 'false') {
   // don't connect to the bittorrent-dht
   // hack for testing
   var DHT = require('bittorrent-dht/client');
-  var dhtConf = {};
-  if (config.bootstrap) dhtConf.bootstrap = config.bootstrap;
+  var dhtConf = {
+    bootstrap: config.bootstrap || false
+  };
+
   if (config.nodeId) dhtConf.nodeId = config.nodeId;
 
   config.dht = new DHT(dhtConf);
