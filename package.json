@@ -27,14 +27,15 @@
   },
   "license": "MIT",
   "dependencies": {
+    "bitkeeper-js": "git://github.com/tradle/bitkeeper-js.git",
     "body-parser": "^1.10.1",
     "concat-stream": "^1.4.7",
     "debug": "^2.1.1",
     "express": "^4.10.7",
     "minimist": "^1.1.0",
-    "bitkeeper-js": "git://github.com/tradle/bitkeeper-js.git",
-    "tradle-utils": "git://github.com/tradle/tradle-utils.git",
-    "promise-ports": "git://github.com/tradle/promise-ports.git"
+    "promise-ports": "git://github.com/tradle/promise-ports.git",
+    "request": "^2.51.0",
+    "tradle-utils": "git://github.com/tradle/tradle-utils.git"
   },
   "devDependencies": {
     "bittorrent-dht": "^2.6.4",
