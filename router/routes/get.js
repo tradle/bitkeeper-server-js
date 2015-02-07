@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
 
   req.app.get('keeper')
     .get(keys)
-    .done(function (results) {
+    .then(function (results) {
       // results = results.map(function(r) { return r.value });
 
       var value = key ? results[0] : results;
@@ -26,7 +26,10 @@ router.get('/', function (req, res) {
         res.status(404).end();
       else
         res.status(200).send(value);
-    });
+    })
+    .catch(function(err) {
+      throw err;
+    })
 });
 
 module.exports = router;

@@ -8,7 +8,10 @@ router.post('/', function (req, res) {
     .clear()
     .then(function () {
       res.status(200).end();
-    });
+    })
+    .catch(function(err) {
+      throw err;
+    })
 });
 
 module.exports = router;

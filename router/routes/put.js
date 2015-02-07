@@ -17,6 +17,9 @@ router.put('/', function (req, res) {
       .then(function () {
         res.status(200).end();
       })
+      .catch(function(err) {
+        throw err;
+      })
       .done();
   }));
 
