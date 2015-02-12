@@ -14,13 +14,9 @@ router.put('/', function (req, res) {
 
   req.pipe(concat(function (val) {
     keeper.put(key, val)
-      .then(function () {
+      .done(function () {
         res.status(200).end();
-      })
-      .catch(function(err) {
-        throw err;
-      })
-      .done();
+      });
   }));
 
 });
