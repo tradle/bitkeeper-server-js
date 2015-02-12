@@ -120,8 +120,9 @@ function createServer(keeper, port, callback) {
         };
       })
       .catch(function(err) {
-        console.error('Failed to create port mapping', err);
-        process.exit();
+        console.error('Failed to create port mapping, but continuing');
+        clearInterval(mappingIntervalId);
+        // process.exit();
       });
   }
 
