@@ -131,7 +131,9 @@ function createServer(keeper, port, callback) {
 
     debug('CLEANUP');
     if (server) {
-      server.close();
+      try {
+        server.close();
+      } catch (err) {}
       server = null;
     }
 
