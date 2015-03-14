@@ -16,6 +16,7 @@ var dhtConf = {
 if (keeperConf.nodeId) dhtConf.nodeId = keeperConf.nodeId;
 
 keeperConf.dht = new DHT(dhtConf);
+keeperConf.dht.listen(keeperConf.dhtPort);
 keeperConf.storage = path.resolve(keeperConf.storage);
 console.log('STORAGE: ' + keeperConf.storage);
 
