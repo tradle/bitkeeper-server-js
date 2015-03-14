@@ -16,23 +16,19 @@ else
 var config = fs.readFileSync(configPath, {
   encoding: 'utf8'
 });
+
 config = JSON.parse(config);
 
-if (argv.dht === 'false') {
-  // don't connect to the bittorrent-dht
-  // hack for testing
-  var DHT = require('bittorrent-dht/client');
-  var dhtConf = {
-    bootstrap: config.bootstrap || false
-  };
+var DHT = Keeper.DHT;
+var dhtConf = {
+  bootstrap: config.bootstrap || false
+};
 
-  if (config.nodeId) dhtConf.nodeId = config.nodeId;
+if (config.nodeId) dhtConf.nodeId = config.nodeId;
 
-  config.dht = new DHT(dhtConf);
-}
+config.dht = new DHT(dhtConf);
 
 var port = argv.port || require('./conf/config.json').port;
-
 var keeper = new Keeper(config);
 keeper.seedStored();
 keeper.on('ready', function() {
