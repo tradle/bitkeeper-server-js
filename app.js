@@ -2,34 +2,25 @@
 
 var Keeper = require('bitkeeper-js');
 var server = require('./');
+var conf = require('./conf/config.json')
+var keeperConf = conf.keeper;
 var minimist = require('minimist');
-var fs = require('fs');
 var path = require('path');
 var argv = minimist(process.argv);
 
-var configPath;
-if (argv.keeper)
-  configPath = path.join(__dirname, argv.keeper)
-else
-  configPath = path.join(__dirname, 'node_modules/bitkeeper-js/conf/config.json');
-
-var config = fs.readFileSync(configPath, {
-  encoding: 'utf8'
-});
-
-config = JSON.parse(config);
-
 var DHT = Keeper.DHT;
 var dhtConf = {
-  bootstrap: config.bootstrap || false
+  bootstrap: keeperConf.bootstrap || false
 };
 
-if (config.nodeId) dhtConf.nodeId = config.nodeId;
+if (keeperConf.nodeId) dhtConf.nodeId = keeperConf.nodeId;
 
-config.dht = new DHT(dhtConf);
+keeperConf.dht = new DHT(dhtConf);
+keeperConf.storage = path.resolve(keeperConf.storage);
+console.log('STORAGE: ' + keeperConf.storage);
 
-var port = argv.port || require('./conf/config.json').port;
-var keeper = new Keeper(config);
+var port = argv.port || conf.port;
+var keeper = new Keeper(keeperConf);
 keeper.seedStored();
 keeper.on('ready', function() {
   console.log('Bitkeeper is ready, starting server...');
