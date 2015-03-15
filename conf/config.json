@@ -1,12 +1,12 @@
 {
-  "port": 8000,
+  "port": 25667,
   "keeper": {
-    "torrentPort": 8889,
-    "dhtPort":  7778,
+    "torrentPort": 25889,
+    "dhtPort":  25778,
     "checkReplication": 10000,
     "storage": "./storage",
     "bootstrap": [
-      "tradle.io:7778"
+      "tradle.io:25778"
     ]
   }
 }
