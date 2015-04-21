@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 var express = require('express');
-var bodyParser = require('body-parser');
+// var bodyParser = require('body-parser');
 var debug = require('debug')('bitkeeper-server');
 
 var domain = require('domain');
@@ -37,9 +37,9 @@ function createServer(keeper, port, callback) {
     next();
   });
 
-  app.use(bodyParser.urlencoded({
-    extended: true
-  })); // for parsing application/x-www-form-urlencoded
+  // app.use(bodyParser.urlencoded({
+  //   extended: true
+  // })); // for parsing application/x-www-form-urlencoded
 
   /**
    * Routes
@@ -90,15 +90,15 @@ function createServer(keeper, port, callback) {
     if (serverIsUp &&
       portPromise.inspect().state === 'fulfilled' &&
       callback) {
-      callback(null, server);
+      callback(null, app, server);
     }
   }
 
   function errorHandler(err, req, res, next) {
     if (res.finished) return;
 
-    var code = err.status || 500;
-    var msg = 'status' in err ? err.message : 'There was an error with your request. Please contact support@tradle.io';
+    var code = err.code || 500;
+    var msg = 'code' in err ? err.message : 'There was an error with your request. Please contact support@tradle.io';
 
     // log('Error:' + err.message);
     res.status(code).json({

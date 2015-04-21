@@ -6,7 +6,7 @@ var conf = require('./conf/config.json')
 var keeperConf = conf.keeper;
 var minimist = require('minimist');
 var path = require('path');
-var argv = minimist(process.argv);
+var argv = minimist(process.argv.slice(2));
 
 var DHT = Keeper.DHT;
 var dhtConf = {
