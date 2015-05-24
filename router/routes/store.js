@@ -30,4 +30,12 @@ router.get('/:keys', function (req, res) {
     })
 })
 
+router.delete('/:key', function (req, res) {
+  res.status(404) // not supported for now
+
+  // var key = req.params.key
+  // var keeper = req.app.get('keeper')
+  // keeper.delete(key)
+})
+
 module.exports = router
