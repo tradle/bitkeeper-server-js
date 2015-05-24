@@ -7,15 +7,12 @@
     "bitkeeper": "./app.js"
   },
   "scripts": {
-    "jsbeautify": "js-beautify -r {*.js,router/**/*.js} --config=node_modules/tradle-style/.jsbeautifyrc",
-    "jscs": "jscs {*.js,router/**/*.js} --config=node_modules/tradle-style/.jscsrc",
-    "jshint": "jshint {*.js,router/**/*.js} --config=node_modules/tradle-style/.jshintrc",
     "run": "node ./app.js",
-    "testrun": "node ./app.js --dht=false"
+    "testrun": "node ./app.js --dht=false",
+    "style": "standard"
   },
   "pre-commit": [
-    "jscs",
-    "jshint"
+    "style"
   ],
   "bugs": {
     "url": "https://github.com/tradle/bitkeeper-server-js/issues"
@@ -42,6 +39,7 @@
     "jscs": "^1.10.0",
     "jshint": "latest",
     "pre-commit": "0.0.11",
+    "standard": "^3.11.0",
     "tape": "^3.4.0",
     "tradle-style": "latest"
   }

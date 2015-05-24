@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
-router.get('/', function(req, res) {
-  res.status(200).end();
-});
+router.get('/', function (req, res) {
+  res.status(200).end()
+})
 
-module.exports = router;
+module.exports = router
