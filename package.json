@@ -8,7 +8,7 @@
   },
   "scripts": {
     "run": "node ./app.js",
-    "testrun": "node ./app.js --dht=false",
+    "local": "node ./app.js --dht=false",
     "style": "standard"
   },
   "pre-commit": [
@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "bitkeeper-js": "git://github.com/tradle/bitkeeper-js#dev",
+    "bitkeeper-js": "git://github.com/tradle/bitkeeper-js",
     "body-parser": "^1.10.1",
     "concat-stream": "^1.4.7",
     "debug": "^2.1.1",

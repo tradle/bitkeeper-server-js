@@ -1,7 +1,6 @@
 {
   "port": 25667,
   "keeper": {
-    "torrentPort": 25889,
     "dhtPort":  25778,
     "checkReplication": 10000,
     "storage": "./storage",

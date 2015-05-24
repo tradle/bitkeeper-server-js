@@ -24,12 +24,6 @@ var port = argv.port || conf.port
 var keeper = new Keeper(keeperConf)
 keeper.seedStored()
 keeper.on('ready', function () {
-  keeper.mapPorts()
-    .catch(function (err) {
-      console.log('Failed to map dht+torrent ports, continuing...', err)
-    })
-    .finally(function () {
-      console.log('Bitkeeper is ready, starting server...')
-      server.create(keeper, port)
-    })
+  console.log('Bitkeeper is ready, starting server...')
+  server.create(keeper, port)
 })
