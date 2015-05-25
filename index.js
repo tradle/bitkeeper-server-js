@@ -7,7 +7,7 @@ var debug = require('debug')('bitkeeper-server')
 
 var domain = require('domain')
 var utils = require('tradle-utils')
-var ports = require('promise-ports')
+// var ports = require('promise-ports')
 var router = require('./router')
 // var request = require('request')
 
@@ -15,7 +15,7 @@ function createServer (keeper, port, callback) {
   assert(keeper && typeof port !== 'undefined', '"keeper" and "port" are required')
 
   var app = express()
-  var mapping
+  // var mapping
 
   app.set('keeper', keeper)
   app.use(function (req, res, next) {
@@ -56,7 +56,7 @@ function createServer (keeper, port, callback) {
   //   keeper.externalIp(ip)
   // })
 
-  var ttl = 144000
+  // var ttl = 144000
 
   process.on('exit', cleanup)
   process.on('SIGINT', cleanup)
@@ -69,12 +69,12 @@ function createServer (keeper, port, callback) {
   // if (require.main === global.module) {
   // run directly, not as sub-app
 
-  var mappingIntervalId = setInterval(createPortMapping, ttl)
-  var pubPort = port
+  // var mappingIntervalId = setInterval(createPortMapping, ttl)
+  // var pubPort = port
   var privPort = port
   var serverIsUp
-  var portPromise = createPortMapping()
-  portPromise.done(checkReady)
+  // var portPromise = createPortMapping()
+  // portPromise.done(checkReady)
 
   var server = app.listen(privPort, function () {
     console.log('Running on port: ' + privPort)
@@ -87,9 +87,9 @@ function createServer (keeper, port, callback) {
   })
 
   function checkReady () {
-    if (serverIsUp &&
-      portPromise.inspect().state === 'fulfilled' &&
-      callback) {
+    if (serverIsUp
+      // && portPromise.inspect().state === 'fulfilled'
+      && callback) {
       callback(null, app, server)
     }
   }
@@ -107,24 +107,24 @@ function createServer (keeper, port, callback) {
     }, null, 2)
   }
 
-  function createPortMapping () {
-    return ports.mapPort({
-        public: pubPort,
-        private: privPort,
-        hijack: true
-      })
-      .then(function () {
-        mapping = {
-          public: pubPort,
-          private: privPort
-        }
-      })
-      .catch(function (err) {
-        console.error('Failed to create port mapping, but continuing', err)
-        clearInterval(mappingIntervalId)
-      // process.exit()
-      })
-  }
+  // function createPortMapping () {
+  //   return ports.mapPort({
+  //       public: pubPort,
+  //       private: privPort,
+  //       hijack: true
+  //     })
+  //     .then(function () {
+  //       mapping = {
+  //         public: pubPort,
+  //         private: privPort
+  //       }
+  //     })
+  //     .catch(function (err) {
+  //       console.error('Failed to create port mapping, but continuing', err)
+  //       clearInterval(mappingIntervalId)
+  //     // process.exit()
+  //     })
+  // }
 
   function cleanup () {
     if (!server) return
@@ -137,11 +137,11 @@ function createServer (keeper, port, callback) {
       server = null
     }
 
-    if (mapping) {
-      clearInterval(mappingIntervalId)
-      ports.unmapPort(mapping['public'])
-      mapping = null
-    }
+    // if (mapping) {
+    //   clearInterval(mappingIntervalId)
+    //   ports.unmapPort(mapping['public'])
+    //   mapping = null
+    // }
 
     setTimeout(process.exit.bind(process), 1000)
   }

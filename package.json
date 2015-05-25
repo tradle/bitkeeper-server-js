@@ -30,7 +30,6 @@
     "debug": "^2.1.1",
     "express": "^4.10.7",
     "minimist": "^1.1.0",
-    "promise-ports": "git://github.com/tradle/promise-ports.git#bf985c",
     "request": "^2.51.0",
     "tradle-utils": "^0.1.0"
   },
