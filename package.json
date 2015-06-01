@@ -7,8 +7,7 @@
     "bitkeeper": "./app.js"
   },
   "scripts": {
-    "run": "node ./app.js",
-    "local": "node ./app.js --dht=false",
+    "start": "node ./app.js",
     "style": "standard"
   },
   "pre-commit": [
