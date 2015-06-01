@@ -2,7 +2,6 @@
 
 var assert = require('assert')
 var express = require('express')
-// var bodyParser = require('body-parser')
 var debug = require('debug')('bitkeeper-server')
 
 var domain = require('domain')
@@ -36,10 +35,6 @@ function createServer (keeper, port, callback) {
 
     next()
   })
-
-  // app.use(bodyParser.urlencoded({
-  //   extended: true
-  // })); // for parsing application/x-www-form-urlencoded
 
   /**
    * Routes
