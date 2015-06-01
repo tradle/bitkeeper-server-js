@@ -14,32 +14,33 @@ var DHT = Keeper.DHT
 
 getNodeId(init)
 
-function getNodeId(cb) {
-	if (keeperConf.nodeId) cb(keeperConf.nodeId)
-	else {
-		externalIP(function(err, ip) {
-			cb(ip && genNodeId(ip, 1))
-		})
-	}
+function getNodeId (cb) {
+  if (keeperConf.nodeId) cb(keeperConf.nodeId)
+  else {
+    externalIP(function (err, ip) {
+      if (err) cb()
+      else cb(genNodeId(ip, 1))
+    })
+  }
 }
 
-function init(nodeId) {
-	var dhtConf = {
-	  bootstrap: keeperConf.bootstrap || false
-	}
+function init (nodeId) {
+  var dhtConf = {
+    bootstrap: keeperConf.bootstrap || false
+  }
 
-	if (nodeId) dhtConf.nodeId = nodeId
+  if (nodeId) dhtConf.nodeId = nodeId
 
-	keeperConf.dht = new DHT(dhtConf)
-	keeperConf.dht.listen(keeperConf.dhtPort)
-	keeperConf.storage = path.resolve(keeperConf.storage)
-	console.log('STORAGE: ' + keeperConf.storage)
+  keeperConf.dht = new DHT(dhtConf)
+  keeperConf.dht.listen(keeperConf.dhtPort)
+  keeperConf.storage = path.resolve(keeperConf.storage)
+  console.log('STORAGE: ' + keeperConf.storage)
 
-	var port = argv.port || conf.port
-	var keeper = new Keeper(keeperConf)
-	keeper.seedStored()
-	keeper.on('ready', function () {
-	  console.log('Bitkeeper is ready, starting server...')
-	  server.create(keeper, port)
-	})
+  var port = argv.port || conf.port
+  var keeper = new Keeper(keeperConf)
+  keeper.seedStored()
+  keeper.on('ready', function () {
+    console.log('Bitkeeper is ready, starting server...')
+    server.create(keeper, port)
+  })
 }
