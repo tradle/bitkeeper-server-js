@@ -24,7 +24,6 @@
   "license": "MIT",
   "dependencies": {
     "bitkeeper-js": "git://github.com/tradle/bitkeeper-js",
-    "bittorrent-nodeid": "^1.0.0",
     "concat-stream": "^1.4.7",
     "debug": "^2.1.1",
     "express": "^4.10.7",

@@ -1,11 +1,11 @@
 'use strict'
 
+var crypto = require('crypto')
 var Keeper = require('bitkeeper-js')
 var server = require('./')
 var conf = require('./conf/config.json')
 var keeperConf = conf.keeper
 var minimist = require('minimist')
-var genNodeId = require('bittorrent-nodeid')
 var externalIP = require('external-ip')()
 var path = require('path')
 var argv = minimist(process.argv.slice(2))
@@ -19,7 +19,7 @@ function getNodeId (cb) {
   else {
     externalIP(function (err, ip) {
       if (err) cb()
-      else cb(genNodeId(ip, 1))
+      else cb(crypto.createHash('sha256').update(ip).digest().slice(0, 20))
     })
   }
 }
