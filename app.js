@@ -1,15 +1,18 @@
 'use strict'
 
+if (process.env.UTP) {
+  require('multiplex-utp')
+}
+
 var crypto = require('crypto')
+var path = require('path')
+var externalIP = require('external-ip')()
+var minimist = require('minimist')
 var Keeper = require('bitkeeper-js')
 var server = require('./')
 var conf = require('./conf/config.json')
 var keeperConf = conf.keeper
-var minimist = require('minimist')
-var externalIP = require('external-ip')()
-var path = require('path')
 var argv = minimist(process.argv.slice(2))
-
 var DHT = Keeper.DHT
 
 getNodeId(init)
@@ -40,8 +43,6 @@ function init (nodeId) {
   var keeper = new Keeper(keeperConf)
   keeper.on('ready', function () {
     keeper.seedStored()
-    server.create(keeper, port, function () {
-      console.log('Bitkeeper is running on port', port)
-    })
+    server.create(keeper, port)
   })
 }
