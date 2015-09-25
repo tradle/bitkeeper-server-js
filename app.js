@@ -14,6 +14,7 @@ var conf = require('./conf/config.json')
 var keeperConf = conf.keeper
 var argv = minimist(process.argv.slice(2))
 var DHT = Keeper.DHT
+var port = argv.port || conf.port
 
 getNodeId(init)
 
@@ -22,7 +23,7 @@ function getNodeId (cb) {
   else {
     externalIP(function (err, ip) {
       if (err) cb()
-      else cb(crypto.createHash('sha256').update(ip).digest().slice(0, 20))
+      else cb(crypto.createHash('sha256').update(ip + ':' + port).digest().slice(0, 20))
     })
   }
 }
@@ -39,7 +40,6 @@ function init (nodeId) {
   keeperConf.storage = path.resolve(keeperConf.storage)
   console.log('STORAGE: ' + keeperConf.storage)
 
-  var port = argv.port || conf.port
   var keeper = new Keeper(keeperConf)
   keeper.on('ready', function () {
     keeper.seedStored()
