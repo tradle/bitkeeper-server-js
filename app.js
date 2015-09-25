@@ -38,8 +38,8 @@ function init (nodeId) {
 
   var port = argv.port || conf.port
   var keeper = new Keeper(keeperConf)
-  keeper.seedStored()
   keeper.on('ready', function () {
+    keeper.seedStored()
     server.create(keeper, port, function () {
       console.log('Bitkeeper is running on port', port)
     })

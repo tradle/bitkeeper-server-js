@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "bitkeeper-js": "git://github.com/tradle/bitkeeper-js",
+    "bitkeeper-js": "tradle/bitkeeper-js",
     "concat-stream": "^1.4.7",
     "debug": "^2.1.1",
     "express": "^4.10.7",
