@@ -72,11 +72,6 @@ function createServer (keeper, port, callback) {
   // portPromise.done(checkReady)
 
   var server = app.listen(privPort, function () {
-    console.log('Running on port: ' + privPort)
-    // request('http://127.0.0.1:' + privPort + '/ping', function(err, resp, body) {
-    //   console.log('Ping self: ' + resp.statusCode)
-    // })
-
     serverIsUp = true
     checkReady()
   })
