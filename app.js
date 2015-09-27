@@ -9,7 +9,7 @@ var path = require('path')
 var externalIP = require('external-ip')()
 var minimist = require('minimist')
 var Keeper = require('bitkeeper-js')
-var server = require('./')
+var Server = require('./')
 var conf = require('./conf/config.json')
 var keeperConf = conf.keeper
 var argv = minimist(process.argv.slice(2))
@@ -35,6 +35,7 @@ function init (nodeId) {
 
   if (nodeId) dhtConf.nodeId = nodeId
 
+  keeperConf.seedStored = false
   keeperConf.dht = new DHT(dhtConf)
   keeperConf.dht.listen(keeperConf.dhtPort)
   keeperConf.storage = path.resolve(keeperConf.storage)
@@ -43,6 +44,7 @@ function init (nodeId) {
   var keeper = new Keeper(keeperConf)
   keeper.on('ready', function () {
     keeper.seedStored()
-    server.create(keeper, port)
+    var server = Server.create(keeper, port)
+    server.once('close', keeper.destroy.bind(keeper))
   })
 }
