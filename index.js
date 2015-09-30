@@ -1,6 +1,6 @@
 'use strict'
 
-var assert = require('assert')
+var typeforce = require('typeforce')
 var express = require('express')
 var debug = require('debug')('bitkeeper-server')
 
@@ -10,10 +10,20 @@ var utils = require('tradle-utils')
 var router = require('./router')
 // var request = require('request')
 
-function createServer (keeper, port, callback) {
-  assert(keeper && typeof port !== 'undefined', '"keeper" and "port" are required')
+function createServer (options, callback) {
+  typeforce({
+    keeper: 'Object',
+    port: 'Number',
+    readonly: '?Boolean'
+  }, options)
 
+  var keeper = options.keeper
+  var port = options.port
   var app = express()
+  if (options.readonly) {
+    app.set('readonly', true)
+  }
+
   // var mapping
 
   app.set('keeper', keeper)
@@ -31,7 +41,9 @@ function createServer (keeper, port, callback) {
   })
 
   app.use(function (req, res, next) {
-    if (req.hostname !== 'localhost' && req.hostname !== '127.0.0.1') throw utils.httpError(400, 'Only local requests permitted')
+    if (req.hostname !== 'localhost' && req.hostname !== '127.0.0.1') {
+      throw utils.httpError(400, 'Only local requests permitted')
+    }
 
     next()
   })

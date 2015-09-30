@@ -44,7 +44,12 @@ function init (nodeId) {
   var keeper = new Keeper(keeperConf)
   keeper.on('ready', function () {
     keeper.seedStored()
-    var server = Server.create(keeper, port)
+    var server = Server.create({
+      keeper: keeper,
+      readonly: argv.readonly,
+      port: port
+    })
+
     server.once('close', keeper.destroy.bind(keeper))
   })
 }

@@ -1,8 +1,16 @@
 var express = require('express')
 var router = express.Router()
 var concat = require('concat-stream')
+var utils = require('tradle-utils')
+
+module.exports = router
 
 router.put('/:key', function (req, res) {
+  var isReadOnly = req.app.get('readonly')
+  if (isReadOnly) {
+    throw utils.httpError(403, 'This keeper is read-only')
+  }
+
   var key = req.params.key
   var keeper = req.app.get('keeper')
 
@@ -38,4 +46,3 @@ router.delete('/:key', function (req, res) {
 // keeper.delete(key)
 })
 
-module.exports = router
