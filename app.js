@@ -13,11 +13,9 @@ keeperConf.storage = path.resolve(keeperConf.storage)
 console.log('STORAGE: ' + keeperConf.storage)
 
 var keeper = new Keeper(keeperConf)
-var server = Server.create({
-  keeper: keeper,
-  readonly: argv.readonly,
-  port: port
-})
+argv.keeper = keeper
+argv.port = port
+var server = Server.create(argv)
 
   // whichever happens first
 server.once('close', keeper.close.bind(keeper))

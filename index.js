@@ -14,12 +14,14 @@ function createServer (options, callback) {
   typeforce({
     keeper: 'Object',
     port: 'Number',
-    readonly: '?Boolean'
+    readonly: '?Boolean',
+    local: '?Boolean'
   }, options)
 
   var keeper = options.keeper
   var port = options.port
   var app = express()
+  var local = options.local
   if (options.readonly) {
     app.set('readonly', true)
   }
@@ -41,8 +43,10 @@ function createServer (options, callback) {
   })
 
   app.use(function (req, res, next) {
-    if (req.hostname !== 'localhost' && req.hostname !== '127.0.0.1') {
-      throw utils.httpError(400, 'Only local requests permitted')
+    if (local) {
+      if (req.hostname !== 'localhost' && req.hostname !== '127.0.0.1') {
+        throw utils.httpError(400, 'Only local requests permitted')
+      }
     }
 
     next()
