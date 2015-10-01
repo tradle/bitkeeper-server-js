@@ -1,11 +1,6 @@
 {
   "port": 25667,
   "keeper": {
-    "dhtPort":  25778,
-    "checkReplication": 10000,
-    "storage": "./storage",
-    "bootstrap": [
-      "tradle.io:25778"
-    ]
+    "storage": "./storage"
   }
 }
