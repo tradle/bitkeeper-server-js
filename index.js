@@ -92,7 +92,7 @@ function createServer (options, callback) {
     if (serverIsUp
       // && portPromise.inspect().state === 'fulfilled'
       && callback) {
-      callback(null, app, server)
+      callback(null, server)
     }
   }
 
@@ -148,7 +148,7 @@ function createServer (options, callback) {
     setTimeout(process.exit.bind(process), 1000)
   }
 
-  return app
+  return server
 }
 
 module.exports = {

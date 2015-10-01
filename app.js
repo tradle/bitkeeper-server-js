@@ -50,6 +50,8 @@ function init (nodeId) {
       port: port
     })
 
-    server.once('close', keeper.destroy.bind(keeper))
+    // whichever happens first
+    server.once('close', keeper.close.bind(keeper))
+    keeper.once('close', server.close.bind(server))
   })
 }
