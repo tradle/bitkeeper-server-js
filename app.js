@@ -2,7 +2,7 @@
 
 var path = require('path')
 var minimist = require('minimist')
-var Keeper = require('offline-keeper')
+var Keeper = require('@tradle/offline-keeper')
 var Server = require('./')
 var conf = require('./conf/config.json')
 var keeperConf = conf.keeper

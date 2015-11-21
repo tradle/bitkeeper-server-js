@@ -5,7 +5,7 @@ var express = require('express')
 var debug = require('debug')('bitkeeper-server')
 
 var domain = require('domain')
-var utils = require('tradle-utils')
+var utils = require('@tradle/utils')
 // var ports = require('promise-ports')
 var router = require('./router')
 // var request = require('request')

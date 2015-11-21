@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var concat = require('concat-stream')
-var utils = require('tradle-utils')
+var utils = require('@tradle/utils')
 
 module.exports = router
 
