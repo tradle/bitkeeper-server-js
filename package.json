@@ -1,6 +1,6 @@
 {
   "name": "@tradle/bitkeeper-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JS web server for Tradle bitkeeper component",
   "main": "index.js",
   "bin": {
