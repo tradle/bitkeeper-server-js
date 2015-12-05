@@ -1,3 +1,4 @@
+var debug = require('debug')('bitkeeper-server:store')
 var express = require('express')
 var router = express.Router()
 var concat = require('concat-stream')
@@ -15,9 +16,14 @@ router.put('/:key', function (req, res) {
   var keeper = req.app.get('keeper')
 
   req.pipe(concat(function (val) {
-    keeper.put(key, val).done(function (resp) {
-      res.status(200).json(resp)
-    })
+    keeper.put(key, val)
+      .then(function (resp) {
+        res.status(200).json(resp)
+      })
+      .catch(function (err) {
+        debug('failed to put to keeper', err.message, err.stack)
+        res.status(501).send('Something went wrong')
+      })
   }))
 })
 
@@ -26,7 +32,7 @@ router.get('/:keys', function (req, res) {
 
   req.app.get('keeper')
     .get(keys)
-    .done(function (results) {
+    .then(function (results) {
       // results = results.map(function(r) { return r.value })
 
       var value = keys.length === 1 ? results[0] : results
@@ -35,6 +41,10 @@ router.get('/:keys', function (req, res) {
       } else {
         res.status(200).send(value)
       }
+    })
+    .catch(function (err) {
+      debug('value not found', err)
+      res.status(404).send('Not found')
     })
 })
 
