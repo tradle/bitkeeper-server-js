@@ -33,8 +33,6 @@ router.get('/:keys', function (req, res) {
   req.app.get('keeper')
     .get(keys)
     .then(function (results) {
-      // results = results.map(function(r) { return r.value })
-
       var value = keys.length === 1 ? results[0] : results
       if (typeof value === 'undefined') {
         res.status(404).send('Keys not found: ' + keys.join(', '))

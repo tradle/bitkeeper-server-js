@@ -25,6 +25,7 @@
   "dependencies": {
     "@tradle/offline-keeper": "^1.6.1",
     "@tradle/utils": "^0.2.4",
+    "compression": "^1.6.0",
     "concat-stream": "^1.4.7",
     "debug": "^2.1.1",
     "express": "^4.10.7",

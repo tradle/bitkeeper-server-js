@@ -3,7 +3,7 @@
 var typeforce = require('typeforce')
 var express = require('express')
 var debug = require('debug')('bitkeeper-server')
-
+var compression = require('compression')
 var domain = require('domain')
 var utils = require('@tradle/utils')
 // var ports = require('promise-ports')
@@ -21,6 +21,8 @@ function createServer (options, callback) {
   var keeper = options.keeper
   var port = options.port
   var app = express()
+  app.use(compression({ filter: function () { return true }, threshold: 0 }))
+
   var local = options.local
   if (options.readonly) {
     app.set('readonly', true)
